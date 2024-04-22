@@ -1,24 +1,33 @@
-class Conta{
+class Conta {
     titular
     saldo
-    
-    
-    constructor(titular,saldo){
 
-        this.titular=titular;
+
+    constructor(titular, saldo) {
+
+        this.titular = titular;
         this.saldo = saldo;
     }
 
-    depositar(valor){
-        this.saldo +=valor;
+    depositar(valor) {
+        if (valor > 0 && typeof valor == 'number') {
+            this.saldo += valor;
+        } else {
+            console.log("Valor inválido");
+        }
     }
-    sacar(valor){
-        this.saldo -=valor;
+
+    sacar(valor) {
+        if (valor > 0 && typeof valor == 'number' && valor <= this.saldo) {
+            this.saldo -= valor;
+        } else {
+            console.log('Saldo insuficiente')
+        }
     }
-    getSaldo(){
+    getSaldo() {
         return this.saldo;
     }
 }
 
-module.exports=Conta;
+module.exports = Conta;
 
