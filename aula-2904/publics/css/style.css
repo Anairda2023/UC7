@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+    
+
+nav{
+    background-color: black;
+    color: white;
+    padding: 10px;
+
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+nav li{
+    margin-right: 20px;
+}
+nav a{
+    text-decoration: none;
+    color: white
+   
+}
+main{
+    padding: 20px;
+}
+section{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+      
+
+}
+section a{
+    text-decoration: none;
+    border: 2px solid blue;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    
+
+}
+
+
+
+
