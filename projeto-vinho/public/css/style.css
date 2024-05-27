@@ -1,0 +1,163 @@
+/* *{
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    display: flex;
+    background-color: red;
+    color: white;
+    justify-content: center;
+}
+
+div{
+    display: flex;
+    justify-content: space-around;
+} */
+
+/* style.css */
+
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* Estilos para o formulário */
+form {
+    background-color: #fff;
+    padding: 1rem;
+    margin: 2rem auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input.cadastrar {
+    background-color: #5cb85c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form input.cadastrar:hover {
+    background-color: #4cae4c;
+}
+
+/* Estilos para a seção de listagem */
+#listagemVinhos {
+    list-style: none;
+    padding: 0;
+    margin: 2rem auto;
+    max-width: 500px;
+}
+
+#listagemVinhos li {
+    background-color: #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#listagemVinhos li .button-link {
+    background-color: #5bc0de;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#listagemVinhos li .button-link:hover {
+    background-color: #31b0d5;
+}
+
+#listagemVinhos li .button-remover {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#listagemVinhos li .button-remover:hover {
+    background-color: #c9302c;
+}
+
+/* Estilos para a mensagem */
+.message {
+    display: none;
+    max-width: 500px;
+    margin: 1rem auto;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #d986ca;
+    color: #cada14
+    ;
+}
+
+.message.error {
+    background-color: #e3c97a;
+    color: #a94287;
+}
+
+
+.wine-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+.wine-details {
+    flex: 1;
+    margin-left: 10px;
+}
+.wine-details p {
+    margin: 2px 0;
+}
+.wine-img {
+    max-width: 100px;
+    display: block;
+}
+.button-link, .button-remover {
+    margin-right: 5px;
+}

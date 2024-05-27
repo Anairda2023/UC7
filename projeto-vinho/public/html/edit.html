@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Declaração do conjunto de caracteres do documento -->
+    <meta charset="UTF-8">
+    <!-- Configuração da viewport para garantir que a página seja responsiva -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título da página -->
+    <title>Listagem e cadastro de vinhos</title>
+    <!-- Link para o arquivo CSS externo que contém os estilos da página -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Estilos adicionais podem ser adicionados aqui -->
+    <style>
+       /* Adicione estilos CSS personalizados aqui */
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho da página -->
+    <header>
+        <h1>Adicione um Vinho</h1>
+    </header>
+    <main>
+        <!-- Seção principal para o formulário de cadastro de vinhos -->
+        <section>
+            <form method="post" action="/vinhos/create">
+                <label for="name">Nome do vinho:</label>
+                <input type="text" name="name" id="name">
+                <label for="description">Descrição do vinho:</label>
+                <textarea name="description" id="description"></textarea>
+
+                <label for="img">URL da Imagem:</label>
+                <input type="text" name="img" id="img">
+                <div>
+                    <img id="imagePreview" src="" alt="Preview da Imagem" style="display:none; max-width: 100%; margin-top: 10px;">
+                </div>
+                <input class="cadastrar" type="submit" value="Cadastrar vinho">
+            </form>
+        </section>
+        <!-- Seção para listagem dos vinhos -->
+        <section>
+            <div id="message" class="message"></div>
+            <ul id="listagemVinhos">
+                <!-- Vinhos serão listados aqui -->
+            </ul>
+        </section>
+    </main>
+    <script>
+        // Atualiza a visualização da imagem quando o usuário insere um URL
+        document.getElementById('img').addEventListener('input', function() {
+            const imageUrl = this.value;
+            const imagePreview = document.getElementById('imagePreview');
+            if (imageUrl) {
+                imagePreview.src = imageUrl;
+                imagePreview.style.display = 'block';
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+
+        // Função para exibir todos os vinhos
+        function exibirVinhos() {
+            let listagemVinhos = document.getElementById('listagemVinhos');
+
+            // Faz uma requisição GET para a rota /vinhos
+            fetch('/vinhos')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar os dados');
+                    }
+                    return response.json();
+                })
+                .then(vinhos => {
+                    vinhos.forEach(v => {
+                        let li = document.createElement('li');
+                        li.className = 'wine-item';
+
+                        let img = document.createElement('img');
+                        img.src = v.img;
+                        img.alt = v.name;
+                        img.className = 'wine-img';
+                        li.appendChild(img);
+
+                        let wineDetails = document.createElement('div');
+                        wineDetails.className = 'wine-details';
+                        wineDetails.innerHTML = `
+                            <p><strong>Nome:</strong> ${v.name}</p>
+                            <p><strong>Descrição:</strong> ${v.description}</p>
+                        `;
+                        li.appendChild(wineDetails);
+
+                        let actions = document.createElement('div');
+                        actions.className = 'wine-actions';
+
+                        let editar = document.createElement('a');
+                        editar.innerText = "Editar";
+                        editar.href = `/html/edit.html?id=${v.id}`;
+                        editar.classList.add('button-link');
+                        actions.appendChild(editar);
+
+                        let remover = document.createElement('button');
+                        remover.innerText = "Remover";
+                        remover.classList.add('button-remover');
+                        remover.addEventListener('click', () => {
+                            removerVinho(v.id);
+                        });
+                        actions.appendChild(remover);
+
+                        li.appendChild(actions);
+                        listagemVinhos.appendChild(li);
+                    });
+                })
+                .catch(error => console.log('Error:', error));
+        }
+
+        // Função para remover um vinho
+        function removerVinho(id) {
+            fetch(`/vinhos/${id}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        showMessage('Vinho removido com sucesso', 'success');
+                        document.getElementById('listagemVinhos').innerHTML = '';
+                        exibirVinhos();
+                    } else {
+                        showMessage('Vinho não existe ou não pode ser deletado', 'error');
+                        console.error('Error:', response);
+                    }
+                })
+                .catch(error => console.log('Error:', error));
+        }
+
+        // Função para exibir mensagens de sucesso ou erro
+        function showMessage(text, type) {
+            const messageElement = document.getElementById('message');
+            messageElement.innerText = text;
+            messageElement.className = `message ${type}`;
+            messageElement.style.display = 'block';
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Exibe todos os vinhos ao carregar a página
+        exibirVinhos();
+    </script>
+</body>
+</html>
