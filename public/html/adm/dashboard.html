@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Eventos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Eventos Cadastrados</h1>
+    </header>
+    <main>
+        <section>
+                <form id="editarEvento" >
+                    <label for="titulo">Nome do evento:</label>
+                    <input type="text" name="titulo" id="titulo">
+                    <label for="descricao">Descrição do evento:</label>
+                    <textarea name="descricao" id="descricao"></textarea>
+                   <label for="data">Data do evento:</label>
+                    <input type="date" name="data" id="data">
+                    <label for="local">Local do evento:</label>
+                    <input type="text" name="local" id="local">
+                   <input type="submit" value="Atualizar evento">
+                </form>
+        </section>
+        </main>
+
+        <script>
+            let formEdit = document.getElementById('editarEvento');
+            const eventoId = window.location.pathname.split('/').pop();
+            function carregarDados(){
+                    fetch(`/eventos/${eventoId}`)   
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao carregar os dados');
+                        }
+                         return response.json();
+                     })
+                     .then(evento =>{             
+                            document.getElementById('name').value = evento.name;
+                            document.getElementById('description').value = evento.description;       
+                     })
+             }
+             formEdit.addEventListener('submit', ()=>{
+                const tituloEvento =   document.getElementById('titulo').value;
+                const descricaoEvento =  document.getElementById('descricao').value;
+                const dataEvento =   document.getElementById('data').value;
+                const localEvento =  document.getElementById('local').value;
+                fetch(`/eventos/${eventoId}`,{
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        
+                        titulo: tituloEvento,
+                        descricao: descricaoEvento,
+                        data: dataEvento,
+                        local: localEvento,
+                    })
+                } )
+                .then(response => response.json())
+                .then(update =>{
+                    alert('evento atualizado!');
+                    window.location.href = '/eventos';
+                })
+                .catch(error=> console.error ('Error:', error));
+             });
+
+
+            carregarDados();
+        </script>
+
+</body>
+</html>
